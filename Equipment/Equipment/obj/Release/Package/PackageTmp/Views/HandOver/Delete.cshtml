@@ -1,0 +1,120 @@
+﻿@model Equipment.Models.HandOver
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/shared/_Layout.cshtml";
+}
+<h2>Delete Hand Over</h2>
+<hr />
+<script >
+    $("document").ready(function () {
+        $('#Department').val('@Model.Department');
+    });
+    </script>
+@using (Html.BeginForm())
+{
+
+    <div class="form-horizontal" role="form">
+
+        <div class="container row">
+            <div class="form-group col-md-10 col-md-offset-2">
+                @Html.Raw(ViewBag.Msg)
+            </div>
+        </div>
+           <div class="form-group">
+                @Html.LabelFor(model => model.Department, new { @class = "control-label col-md-2" })
+             <div class="col-md-4">
+             
+                 
+                 @Html.DropDownList("Department", new SelectList(ViewBag.Department, "Value", "Text"), new { @class = "form-control", @disabled = "disabled"  })
+       
+                @Html.ValidationMessageFor(m => m.Department, "", new { @class = "text-danger" })
+                 </div>
+            </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.AssetReference, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                 @Html.DropDownListFor(modelItem => modelItem.AssetReference,new SelectList(ViewBag.Assetlist,"Value","Text",Model.AssetReference),new { @class = "form-control" , @disabled = "disabled" })
+
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Photo, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+              
+                              @if (ViewBag.Photo == "No")
+                {
+                    <label id="nophoto" style="color:red;font-family:Arial;text-align:left"  >Photo file not uploaded</label>
+                     
+                }
+                else
+                {
+                 <img id="image" src="data:image/jpeg;base64,@(Convert.ToBase64String(ViewBag.PhotoData))"  style="width:70px;height:70px">
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateTime, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.DateTime, "{0:dd/MM/yyyy}", new { @class = "form-control", id = "DOBDisplayText", @readonly = "readonly" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HandedOverTo, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.HandedOverTo, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.HandedOverToEmail, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.HandedOverToEmail, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Returned, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+
+             @Html.RadioButtonFor(model => model.Returned, "Yes", Model.Returned == "Yes" ? "checked" : string.Empty ) Yes
+                @Html.RadioButtonFor(model => model.Returned, "No",  Model.Returned == "No" ? "checked" : string.Empty) No
+                
+            </div>
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.RecivedDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.RecivedDate, "{0:dd/MM/yyyy}", new { @class = "form-control", id = "RecivedDate", @readonly = "readonly" })
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.RecivedTo, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.RecivedTo, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+
+                    <input type="submit" value="Delete" class="btn btn-default" onclick="return confirm('Are you sure you want to delete this item?');" />
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

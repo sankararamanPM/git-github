@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Equipment.Models.CalibrationWithEquipment>
+@using GridMvc.Html
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/shared/_Layout.cshtml";
+}
+
+<h2>Calibration</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
+@{  
+    Layout = "~/Views/shared/_Layout.cshtml";
+      
+}
+<html>
+<body>
+    <div class="table-responsive">
+          <div style="text-align: right">
+            @using (Html.BeginForm("Index", "Calibration", FormMethod.Get))
+            {
+                <div class="form-group">
+                    Search: @Html.TextBox("Search", ViewBag.CurrentFilter as string)
+                    <input type="submit" value="Search" class="btn btn-default" id="btnSubmit" />
+                </div>
+            }
+        </div>
+
+        <table class="table">
+            @Html.Grid(Model).Columns(columns =>
+                    {
+                        columns.Add(c => c.department.Name).Titled("Department").Filterable(false);
+                        columns.Add(c => c.equipment.Asset).Titled("Asset Reference").Filterable(false);
+                        columns.Add(c => c.calibration.Calibdate).Format("{0:dd/MM/yyyy}").Titled("Calibration Date").Filterable(false);
+                        columns.Add(c => c.calibration.DueDate).Format("{0:dd/MM/yyyy}").Titled("Due Date").Filterable(false);
+                        columns.Add(c => c.calibration.Remarks).Titled("Remarks").Filterable(false);
+                        columns.Add().Encoded(false).Sanitized(false).Titled("Image").Filterable(false).RenderValueAs(c => @<div style="width:100px;"><img alt="Image" src="data:image/jpeg;base64,@(Convert.ToBase64String(c.equipment.Photo))" style="width:70px;height:70px" /></div>);
+                        columns.Add()
+                        .Encoded(false)
+                        .Sanitized(false)
+                        .RenderValueAs(o => Html.ActionLink("View", "Details", new { id = o.calibration.Id }));
+                        columns.Add()
+                        .Encoded(false)
+                        .Sanitized(false)
+                        .RenderValueAs(o => Html.ActionLink("Edit", "Edit", new { id = o.calibration.Id }));
+                        columns.Add()
+                        .Encoded(false)
+                        .Sanitized(false)
+                        .RenderValueAs(o => Html.ActionLink("Delete", "Delete", new { id = o.calibration.Id }));
+
+                    }).WithPaging(5).Sortable(true)
+        </table>
+    </div>
+</body>
+</html>
+
+
+
+
+
+

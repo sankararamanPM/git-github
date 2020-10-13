@@ -1,0 +1,77 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css?parameter=1"
+        rel="stylesheet">
+    <%--Add the css reference here--%>
+    <link href="../css/simple-sidebar.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script>
+        $(document).ready(function () {
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("active");
+            });
+        });
+    </script>
+    <style>
+        #wrapper.active #sidebar-wrapper
+        {
+            left: 50px;
+        }
+    </style>
+    <title>
+        Equipment Management System
+    </title>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar">
+                    </span>
+                </button>
+                <a class="navbar-brand" href="/">Equipment Management System </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    
+                    <li><a href="~/Equipment/Index">Equipment Details</a></li>
+                    <li><a href="~/Calibration/Index">Calibration Details</a></li>
+                    <li><a href="~/Handover/Index">HandOver Details</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content" style="margin-top: 50px">
+        @RenderBody()
+    </div>
+@*     <footer class="login-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        Copyright © @DateTime.Now.Year Titan Ltd. | All Rights Reserved.
+                    </div>
+                </div>
+            </div>
+        </footer>*@
+    @*<div id="wrapper">
+        <!-- Sidebar -->
+        
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <br />
+            <br />
+            <hr />
+        <footer>
+            <p>&copy; 2020 - All rights are reserved to Titan Pvt Ltd</p>
+        </footer>
+        </div>
+        <!-- /#page-content-wrapper -->
+    </div>*@
+</body>
+</html>

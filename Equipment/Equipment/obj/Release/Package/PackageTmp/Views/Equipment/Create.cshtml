@@ -1,0 +1,355 @@
+﻿@model Equipment.Models.Equipment
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+<script type="text/javascript">
+
+    $(function () {
+
+
+        $("#DOBDisplayText").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            numberOfMonths: 1,
+            maxDate: 0,
+            dateFormat: 'dd-mm-yy'
+        });
+
+        $("#RecivedDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            numberOfMonths: 1,
+            maxDate: 0,
+            dateFormat: 'dd-mm-yy'
+        });
+        $("#Purchaseddate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            numberOfMonths: 1,
+            maxDate: 0,
+            dateFormat: 'dd-mm-yy'
+        });
+        $("#Calibrationduedate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            numberOfMonths: 1,
+            maxDate: 0,
+            dateFormat: 'dd-mm-yy'
+        });
+
+
+
+    });
+</script>
+
+<h2>Create Equipment</h2>
+<hr />
+@using (Html.BeginForm("Create", "Equipment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="form-horizontal" role="form">
+
+        <div class="container row">
+            <div class="form-group col-md-10 col-md-offset-2">
+                @Html.Raw(ViewBag.Msg)
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+
+            @Html.LabelFor(model => model.Asset, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.Asset, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Asset, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.LabelFor(model => model.Category, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.Category, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Category, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        <div class="form-group">
+
+            @Html.LabelFor(model => model.Specification, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.Specification, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Specification, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.LabelFor(model => model.Brand, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.Brand, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Brand, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        <div class="form-group">
+
+            @Html.LabelFor(model => model.PurchasedVendorDetails, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.PurchasedVendorDetails, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PurchasedVendorDetails, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.LabelFor(model => model.CalibrationVendorDetails, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.CalibrationVendorDetails, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CalibrationVendorDetails, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        <div class="form-group">
+
+            @Html.LabelFor(model => model.PurchasedVendorEmail, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.PurchasedVendorEmail, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PurchasedVendorEmail, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.LabelFor(model => model.CalibrationVendorEmail, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.CalibrationVendorEmail, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CalibrationVendorEmail, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        <div class="form-group">
+
+            @Html.LabelFor(model => model.PONo, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.PONo, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PONo, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.LabelFor(model => model.PODate, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.PODate, new { @class = "form-control", id = "DOBDisplayText", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.PODate, "", new { @class = "text-danger" })
+
+            </div>
+
+        </div>
+        <div class="form-group">
+
+
+
+            @Html.LabelFor(model => model.RecievedDate, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.RecievedDate, new { @class = "form-control", id = "RecivedDate", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.RecievedDate, "", new { @class = "text-danger" })
+
+            </div>
+
+            @Html.LabelFor(model => model.Factoryunit, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.DropDownList("FactoryUnit",  ViewBag.FactoryUnitlist as SelectList, "Select Factory Unit",new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Factoryunit, "", new { @class = "text-danger" })
+
+            </div>
+
+        </div>
+        <div class="form-group">
+
+
+
+            @Html.LabelFor(model => model.Department, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+             @Html.DropDownList("Department",  ViewBag.DepartmentList as SelectList, "Select Department",new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+
+            </div>
+
+            @Html.LabelFor(model => model.Photo, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <input type="file" id="Photofile" name="file" />
+                @Html.ValidationMessageFor(model => model.Photo, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        <div class="form-group">
+
+            @Html.LabelFor(model => model.OperatingInstructionpdf, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <input type="file" id="OperInstfile" name="file" />
+                @Html.ValidationMessageFor(model => model.OperatingInstructionpdf, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.Datasheetpdf, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <input type="file" id="Datasheetpdf" name="file" />
+                @Html.ValidationMessageFor(model => model.Datasheetpdf, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        <div class="form-group">
+
+
+
+            @Html.LabelFor(model => model.Cataloguepdf, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <input type="file" id="Cataloguepdf" name="file" />
+                @Html.ValidationMessageFor(model => model.Cataloguepdf, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.Responsible, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.Responsible, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Responsible, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+
+
+
+            @Html.LabelFor(model => model.Emailid, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.Emailid, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Emailid, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.Empcd, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.Empcd, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Empcd, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        <div class="form-group">
+
+
+
+            @Html.LabelFor(model => model.Specification1, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.Specification1, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Specification1, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.LabelFor(model => model.Purchaseddate, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+
+                @Html.TextBoxFor(model => model.Purchaseddate, new { @class = "form-control", id = "Purchaseddate", @readonly = "readonly" })
+                @Html.ValidationMessageFor(m => m.Purchaseddate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+
+
+            @Html.LabelFor(model => model.Value, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.Value, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Value, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.Age, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.Age, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Age, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+
+
+
+            @Html.LabelFor(model => model.Prevcalibration, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.Prevcalibration, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Prevcalibration, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.Calibrationduedate, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+
+                @Html.TextBoxFor(model => model.Calibrationduedate, new { @class = "form-control", id = "Calibrationduedate", @readonly = "readonly" })
+                @Html.ValidationMessageFor(m => m.Calibrationduedate, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        <div class="form-group">
+
+
+
+            @Html.LabelFor(model => model.Active, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.RadioButtonFor(model => model.Active, "Yes", new { @checked = true, @readonly = "readonly" }) Yes
+                @Html.RadioButtonFor(model => model.Active, "No", new { @checked = true }) No
+                @Html.ValidationMessageFor(m => m.Active, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.HandedOverto, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.HandedOverto, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.HandedOverto, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+
+
+
+            @Html.LabelFor(model => model.Remark1, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.Remark1, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Remark1, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.Remark2, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.Remark2, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Remark2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+

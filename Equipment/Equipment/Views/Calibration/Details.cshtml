@@ -1,0 +1,108 @@
+﻿@model Equipment.Models.Calibration
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/shared/_Layout.cshtml";
+}
+
+<h2>Calibration Details</h2>
+<hr />
+<script >
+    $("document").ready(function () {
+        $('#Department').val('@Model.Department');
+    });
+    </script>
+@using (Html.BeginForm())
+{
+
+    <div class="form-horizontal" role="form">
+
+        <div class="container row">
+            <div class="form-group col-md-10 col-md-offset-2">
+                @Html.Raw(ViewBag.Msg)
+            </div>
+        </div>
+          <div class="form-group">
+                @Html.LabelFor(model => model.Department, new { @class = "control-label col-md-2" })
+             <div class="col-md-4">
+             
+                 
+                 @Html.DropDownList("Department", new SelectList(ViewBag.Department, "Value", "Text"), new { @class = "form-control", @disabled = "disabled"  })
+       
+                @Html.ValidationMessageFor(m => m.Department, "", new { @class = "text-danger" })
+                 </div>
+            </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.AssetReference, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+             @Html.DropDownListFor(modelItem => modelItem.AssetReference,new SelectList(ViewBag.Assetlist,"Value","Text",Model.AssetReference),new { @class = "form-control" , @disabled = "disabled" })
+
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Photo, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                      @if (ViewBag.Photo == "No")
+                {
+                    <label id="nophoto" style="color:red;font-family:Arial;text-align:left"  >Photo file not uploaded</label>
+                     
+                }
+                else
+                {
+                    <img id="image" src="data:image/jpeg;base64,@(Convert.ToBase64String(ViewBag.PhotoData))"  style="width:70px;height:70px">
+                }
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Calibdate, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Calibdate, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = "readonly" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DueDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.DueDate,"{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = "readonly" })
+            </div>
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CalibReportpdf, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                     @if (Model.CalibReportpdf == null)
+                {
+                    <label id="calrpt" style="color:red;font-family:Arial;text-align:left"  >Calibration report not uploaded</label>
+                     
+                }
+                else
+                {
+              //   @Html.ActionLink("Click here to View", "DownloaddatapdfFile", new { id=Model.Id })
+                            <a href="@Url.Action("DownloaddatapdfFile", "Calibration", new { id = Model.Id }) ">
+                           <img src="~/Image/pdfioc.png" style="width:30px;height:25px" />
+                      </a> 
+                }
+            </div>
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Remarks, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+              
+   @Html.TextBoxFor(m => m.Remarks, new { @class = "form-control", @readonly = "readonly" })               
+            </div>
+
+        </div>
+        
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+

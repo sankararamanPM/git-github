@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Equipment.Models.HandOverWithEquipment>
+
+@using GridMvc.Html
+
+@{  
+    ViewBag.Title = "Details";  
+}
+
+
+<h2>Hand Over</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
+@{  
+    Layout = "~/Views/shared/_Layout.cshtml";
+      
+}
+<html>
+<body>
+    <div class="table-responsive">
+         <div style="text-align: right">
+            @using (Html.BeginForm("Index", "HandOver", FormMethod.Get))
+            {
+                <div class="form-group">
+                    Search: @Html.TextBox("Search", ViewBag.CurrentFilter as string)
+                    <input type="submit" value="Search" class="btn btn-default" id="btnSubmit" />
+                </div>
+            }
+        </div>
+        <table class="table">
+            @Html.Grid(Model).Columns(columns =>
+                    {
+                        columns.Add(c => c.department.Name).Titled("Department").Filterable(false);
+                        columns.Add(c => c.equipment.Asset).Titled("Asset Reference").Filterable(false);
+                        columns.Add(c => c.handOver.DateTime).Format("{0:dd/MM/yyyy}").Titled("DateTime").Filterable(false);
+                        columns.Add(c => c.handOver.HandedOverTo).Titled("Handed Over To").Filterable(false);
+                        columns.Add(c => c.handOver.HandedOverToEmail).Titled("Handed Over To Email").Filterable(false);
+                        columns.Add(c => c.handOver.Returned).Titled("Returned").Filterable(false);
+                        columns.Add(c => c.handOver.RecivedDate).Format("{0:dd/MM/yyyy}").Titled("Recieved Date").Filterable(false);
+                        columns.Add().Encoded(false).Sanitized(false).Titled("Image").Filterable(false).RenderValueAs(c => @<div style="width:100px;"><img alt="Image" src="data:image/jpeg;base64,@(Convert.ToBase64String(c.equipment.Photo))" style="width:70px;height:70px" /></div>);
+                        columns.Add()
+                        .Encoded(false)
+                        .Sanitized(false)
+                        .RenderValueAs(o => Html.ActionLink("View", "Details", new { id = o.handOver.Id }));
+                        columns.Add()
+                        .Encoded(false)
+                        .Sanitized(false)
+                        .RenderValueAs(o => Html.ActionLink("Edit", "Edit", new { id = o.handOver.Id }));
+                        columns.Add()
+                        .Encoded(false)
+                        .Sanitized(false)
+                        .RenderValueAs(o => Html.ActionLink("Delete", "Delete", new { id = o.handOver.Id }));
+
+                    }).WithPaging(5).Sortable(true)
+        </table>
+    </div>
+</body>
+</html>
+
+
+
+
+

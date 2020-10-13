@@ -1,0 +1,231 @@
+﻿@model Equipment.Models.HandOver
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/shared/_Layout.cshtml";
+    }
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+<script type="text/javascript">
+
+    $(function () {
+        
+
+        $("#DOBDisplayText").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            numberOfMonths: 1,
+            maxDate: 0,
+            dateFormat: 'dd-mm-yy'
+        });
+
+        $("#RecivedDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            numberOfMonths: 1,
+            maxDate: 0,
+            dateFormat: 'dd-mm-yy'
+        });
+        
+
+    });
+ </script>
+<script >  
+    $(document).ready(function()  
+    {  
+        $("#Asset").on("change", function ()
+        {
+           
+            var id = $("#Asset").val();
+                     $.ajax({
+                type: "POST",
+                url: "@Url.Action("Checkphotoexist", "HandOver")",
+                data: '{id: "' + id + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+
+                    var div = document.getElementById("notphoto");
+                    var div1 = document.getElementById("withphoto");
+                    div.style.display = "none";
+                    div1.style.display = "block";
+                    var imgsrc = "data:image/png;base64," + btoa(String.fromCharCode.apply(null, new Uint8Array(response)));
+                    document.getElementById("image").src = imgsrc;
+                },
+                error: function (error) {
+                    var div = document.getElementById("notphoto");
+                    var div1 = document.getElementById("withphoto");
+                    div.style.display = "block";
+                    div1.style.display = "none";
+                }
+            });
+        });  
+    });
+   
+    $(document).ready(function () {
+        $("#Department").on("change", function () {
+
+            var id = $("#Department").val();
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("GetAsset", "HandOver")",
+                data: '{id: "' + id + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    $("#Asset").empty();
+                    $("#Asset").append('<option value="">Select Asset</option>');
+                    var ddlCustomers = document.getElementById("Asset");
+                    $.each(data, function (id, result) {
+                       
+                        // $("#Asset").append('<option value"'+result.Value+'">'+result.Text+'</option>');
+                        var option = document.createElement("OPTION");
+
+                        //Set Customer Name in Text part.
+                        option.innerHTML = result.Text;
+
+                        //Set CustomerId in Value part.
+                        option.value = result.Value;
+
+                        //Add the Option element to DropDownList.
+                        ddlCustomers.options.add(option);
+                   
+                    });
+                    document.getElementById("image").src = "#";
+                },
+                error: function (error) {
+                  
+                }
+            });
+        });
+    });
+
+</script>  
+
+<h2>Create Handed Over</h2>
+<hr />
+@using (Html.BeginForm("Create", "HandOver", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="form-horizontal" role="form">
+        
+        <div class="container row">
+            <div class="form-group col-md-10 col-md-offset-2">
+                @Html.Raw(ViewBag.Msg)
+            </div>
+        </div>
+        <div class="form-group">
+                @Html.LabelFor(model => model.Department, new { @class = "control-label col-md-2" })
+             <div class="col-md-4">
+             @Html.DropDownList("Department",  ViewBag.Department as SelectList, "Select Department",new { @class = "form-control" })
+                
+       
+                @Html.ValidationMessageFor(m => m.Department, "", new { @class = "text-danger" })
+                 </div>
+            </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.AssetReference, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+
+         @Html.DropDownList("Asset",  Enumerable.Empty<SelectListItem>(), "Select Asset",new { @class = "form-control" })
+                
+       
+                @Html.ValidationMessageFor(m => m.AssetReference, "", new { @class = "text-danger" })
+
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Photo, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+              
+                <div id="notphoto" style="display:none">
+                    <label id="nophoto" style="color:red;font-family:Arial;text-align:left"  >Photo file not uploaded</label>
+                     </div>
+                <div id="withphoto" style="display:none">
+               
+              <img id="image" src=""  style="width:70px;height:70px">
+               </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateTime, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.DateTime, new { @class = "form-control", id = "DOBDisplayText", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+           <div class="form-group">
+            @Html.LabelFor(model => model.HandedOverTo, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+
+
+                @Html.TextBoxFor(m => m.HandedOverTo, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.HandedOverTo, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.HandedOverToEmail, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+
+
+                @Html.TextBoxFor(m => m.HandedOverToEmail, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.HandedOverToEmail, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+         <div class="form-group">
+            @Html.LabelFor(model => model.Returned, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                  @Html.RadioButtonFor(model => model.Returned, "Yes", new { @checked = true, @readonly = "readonly" }) Yes
+@Html.RadioButtonFor(model => model.Returned, "No", new { @checked = true }) No
+
+
+                
+                @Html.ValidationMessageFor(m => m.Returned, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+          <div class="form-group">
+            @Html.LabelFor(model => model.RecivedDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.RecivedDate, new { @class = "form-control", id = "RecivedDate", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.RecivedDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.RecivedTo, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.RecivedTo, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.RecivedTo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+
+                <input type="submit" value="Create" class="btn btn-default" id="btnSubmit" />
+            </div>
+        </div>
+    </div>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
