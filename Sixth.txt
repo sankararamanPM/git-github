@@ -2,3 +2,7 @@ Hi,this
 is
 sixth
 file.
+Fruits
+Mango
+Banana
+apple
